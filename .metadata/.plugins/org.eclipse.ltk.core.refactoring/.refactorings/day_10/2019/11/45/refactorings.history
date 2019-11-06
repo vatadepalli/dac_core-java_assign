@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename package &apos;cust_excs&apos; to &apos;com.app.cust_excs&apos;&#x0A;- Original project: &apos;day_10&apos;&#x0A;- Original element: &apos;day_10/src/cust_excs&apos;&#x0A;- Renamed element: &apos;day_10/src/com.app.cust_excs&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename package &apos;cust_excs&apos;" flags="589830" hierarchical="false" id="org.eclipse.jdt.ui.rename.package" input="/src&lt;cust_excs" name="com.app.cust_excs" qualified="false" references="true" stamp="1573029559520" textual="false" version="1.0"/>
+</session>

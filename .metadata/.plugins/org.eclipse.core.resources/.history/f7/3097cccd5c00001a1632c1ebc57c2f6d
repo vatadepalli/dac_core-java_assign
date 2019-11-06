@@ -1,0 +1,5 @@
+package threads_2;
+
+public class RunnableTask {
+
+}

@@ -1,0 +1,17 @@
+package com.app.core;
+
+import java.util.Date;
+
+public class Customer {
+	
+	String email, password;
+	Double regAmount;
+	Date regDate;
+	Address homeAddress, officeAddress;
+
+}
+
+public boolean linkAddress() {
+	
+}
+}

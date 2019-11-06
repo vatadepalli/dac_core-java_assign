@@ -1,0 +1,10 @@
+package com.adikaplabs.shapes;
+
+public class Circle extends Point implements Computable{
+
+	public Circle(double x, double y, double radius) {
+		super(x, y);
+		this.radius = radius;
+	}
+
+}

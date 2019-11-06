@@ -1,0 +1,78 @@
+package com.app.core;
+
+import java.util.Date;
+
+import static utils.ValidationRules.*;
+
+public class Student {
+
+	private String prn, name, email;
+	private int marks;
+	private Date dob;
+	private StudentCourse course;
+
+	/**
+	 * @return the prn
+	 */
+	public String getPrn() {
+		return prn;
+	}
+
+	/**
+	 * @param marks the marks to set
+	 */
+	public void setMarks(int marks) {
+		this.marks = marks;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
+	}
+
+	/**
+	 * @return the marks
+	 */
+	public int getMarks() {
+		return marks;
+	}
+
+	/**
+	 * @return the dob
+	 */
+	public Date getDob() {
+		return dob;
+	}
+
+	/**
+	 * @return the course
+	 */
+	public StudentCourse getCourse() {
+		return course;
+	}
+
+	public Student(String prn, String name, String email, int marks, StudentCourse course, Date dob) {
+		this.prn = prn;
+		this.name = name;
+		this.email = email;
+		this.marks = marks;
+		this.course = course;
+		this.dob = dob;
+	}
+
+	@Override
+	public String toString() {
+		return "Student---> PRN: " + prn + " Name: " + name + " Email: " + email + " Marks: " + marks + " Course: "
+				+ course + " DOB: " + sdf.format(dob);
+	}
+
+}

@@ -1,0 +1,8 @@
+package com.app.cust_excs;
+
+public class CustomerHandlingException extends Exception {
+
+	public CustomerHandlingException(String errMsg) {
+		super(errMsg);
+	}
+}

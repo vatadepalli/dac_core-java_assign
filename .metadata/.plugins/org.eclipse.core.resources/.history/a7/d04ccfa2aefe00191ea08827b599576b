@@ -1,0 +1,13 @@
+package com.adikaplabs.core;
+
+public class Manager extends Employee{
+	
+	private double perfBonus;
+
+	public Manager(String name, String email, String deptId, double basic, double perfBonus) {
+		super(name, email, deptId, basic);
+		this.perfBonus = perfBonus;
+	}
+	
+	
+}

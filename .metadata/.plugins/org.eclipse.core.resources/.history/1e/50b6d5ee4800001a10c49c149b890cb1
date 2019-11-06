@@ -1,0 +1,31 @@
+package com.app.tester;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Scanner;
+import java.util.TreeMap;
+
+import static com.app.utils.CustomerValidations.*;
+import static com.app.utils.CustomerUtils.*;
+
+import com.app.core.Address;
+import com.app.core.CustType;
+import com.app.core.Customer;
+
+import com.app.cust_excs.CustomerHandlingException;
+
+public class testCust {
+
+	public static void main(String[] args) {
+
+		try (Scanner sc = new Scanner(System.in)) {
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+}

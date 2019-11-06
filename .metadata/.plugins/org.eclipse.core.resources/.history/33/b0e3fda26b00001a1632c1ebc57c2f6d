@@ -1,0 +1,24 @@
+package com.app.utils;
+
+import java.util.ArrayList;
+import com.app.cust_excs.*;
+
+import com.app.core.Student;
+import static com.app.utils.ValidationRules.*;
+import java.text.ParseException;
+
+public class CollectionUtils {
+	
+	public static ArrayList<Student> populateStudent() throws StudentHandlingException, ParseException { 
+		ArrayList<Student> st = new ArrayList<>();
+		
+		st.add(new Student("12345678", validateName("qwerty"), validateEmail("qwerty@g"), "86", validateDate("10.12.1998"), validateCourse("DAC")));
+		st.add(new Student("23456e45", validateName("asdfgh"), validateEmail("asdfgh@g"), "76", validateDate("11.12.1998"), validateCourse("DMC")));
+		st.add(new Student("23456789", validateName("gfdsaAS"), validateEmail("gfdsaAS@g"), "66", validateDate("10.2.1996"), validateCourse("DBDA")));
+		st.add(new Student("98765433", validateName("GFDSASD"), validateEmail("GFDSASD@g"), "56", validateDate("10.12.1980"), validateCourse("DAC")));
+		
+		return st;
+		
+	}
+
+}

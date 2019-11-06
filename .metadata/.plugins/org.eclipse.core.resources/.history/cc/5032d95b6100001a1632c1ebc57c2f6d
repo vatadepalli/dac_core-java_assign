@@ -1,0 +1,11 @@
+package com.app.cust_excs;
+
+package cust_exc;
+
+@SuppressWarnings("serial")
+public class BankHandlingException extends Exception {
+	public BankHandlingException(String mesg) {
+		super(mesg);
+	}
+}
+

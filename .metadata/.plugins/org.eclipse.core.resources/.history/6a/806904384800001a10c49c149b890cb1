@@ -1,0 +1,45 @@
+package com.app.tester;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Scanner;
+import java.util.TreeMap;
+
+import static com.app.utils.CustomerValidations.*;
+import static com.app.utils.CustomerUtils.*;
+
+import com.app.core.Address;
+import com.app.core.CustType;
+import com.app.core.Customer;
+
+import com.app.cust_excs.CustomerHandlingException;
+
+public class testCust {
+
+	public static void main(String[] args) {
+
+		try (Scanner sc = new Scanner(System.in)) {
+			HashMap<String, Customer> customers = populateCustomer();
+			boolean loop = false;
+			
+			while(!loop) {
+				System.out.println("***** Welcome *****");
+				System.out.println("1.Register New Customer \n"
+						+ "2.Link Address \n"
+						+ "3.Customer Login \n"
+						+ "4.Un-subscribe Customer \n"
+						+ "5.Display All Customers of a particular Type \n"
+						+ "6.Update Address \n"
+						+ "7.Display Sorted Customers as per Email \n"
+						+ "8.Display Sorted Customers as per Registration Date \n"
+						+ "9.Display All Customers Details \n"
+						+ "10.Exit");
+				System.out.println("Enter your Choice: ");
+			}
+		}
+
+	}
+}

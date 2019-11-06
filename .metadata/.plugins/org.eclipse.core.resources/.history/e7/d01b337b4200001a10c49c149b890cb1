@@ -1,0 +1,11 @@
+package com.app.core;
+
+import java.utils.Date;
+
+public class Customer {
+	
+	String email, password;
+	Double regAmount;
+	Date regDate;
+
+}

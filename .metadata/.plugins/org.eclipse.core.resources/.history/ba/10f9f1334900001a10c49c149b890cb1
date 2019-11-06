@@ -1,0 +1,160 @@
+package com.app.tester;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Scanner;
+import java.util.TreeMap;
+
+import static com.app.utils.CustomerValidations.*;
+import static com.app.utils.CustomerUtils.*;
+
+import com.app.core.Address;
+import com.app.core.CustType;
+import com.app.core.Customer;
+
+import com.app.cust_excs.CustomerHandlingException;
+
+public class testCust {
+
+	public static void main(String[] args) {
+
+		try (Scanner sc = new Scanner(System.in)) {
+
+			HashMap<String, Customer> customers = populateCustomer();
+			boolean loop = false;
+
+			while (!loop) {
+				try {
+					System.out.println("***** Welcome *****");
+					System.out.println("1. New Customer \n" + "2.Link Address \n" + "3.Customer Login \n"
+							+ "4.Un-subscribe Customer \n" + "5.Show All Customers of a Type \n" + "6.Update Address \n"
+							+ "7.Show Customers Sorted by Email \n" + "8.Show Customers Sorted by Registration Date \n"
+							+ "9.Show All Customers Details \n" + "10.Exit");
+					System.out.println("Please Enter your Choice: ");
+
+					switch (sc.nextInt()) {
+					case 1: // Register new customer
+							// I/P --customer details
+					{
+						System.out.println("Enter Customer Details(Email,password,regAmt,regDate(" + sdf.toPattern()
+								+ "),custType[" + Arrays.toString(CustType.values()) + "])");
+						String email = sc.next();
+						if (customers.putIfAbsent(email, new Customer(email, sc.next(), sc.nextDouble(),
+								validateRegDate(sc.next()), validateCustType(sc.next()))) != null)
+							throw new CustomerHandlingException(email + " Already Exists! Please Enter a valid one.");
+						System.out.println("Added : " + customers.get(email));
+					}
+						break;
+					case 2: // Link Address(Try last!)
+							// i/p :customer email , password , adr details
+					{
+						System.out.println("<---------------Enter Login Details to Link New Address-------------------->");
+						System.out.println("Enter your Email and Password: ");
+						String email = sc.next();
+						Customer c = authenticateCustomer(email, sc.next(), customers);
+						System.out.println("Enter Address (Type City State Country PhoneNo)");
+						c.linkAddress(sc.next(), sc.next(), sc.next(), sc.next(), sc.next());
+						System.out.println("Address Linked Successfully!");
+					}
+						break;
+					case 3: // Customer Login
+							// customer email , password
+					{
+						System.out.println("<---------------Login Details-------------------->");
+						System.out.println("Enter your Email and Password: ");
+						System.out.println("User " + authenticateCustomer(sc.next(), sc.next(), customers).getEmail()
+								+ " logged-in Successfully!");
+					}
+						break;
+					case 4: // Un subscribe customer
+							// customer email , password
+					{
+						System.out.println("<---------------Enter Login Details to Unsubscribe-------------------->");
+						System.out.println("Enter your Email and Password: ");
+						String email = sc.next();
+						authenticateCustomer(email, sc.next(), customers);
+						customers.remove(email);
+						System.out.println("Customer " + email + " Unsubscribed Successfully!");
+					}
+						break;
+					case 5: // Display all customers of a particular type
+							// I/P -- type (silver/gold/platinum)
+					{
+						System.out.println("Enter Customer Type[" + Arrays.toString(CustType.values()) + "]:");
+						CustType ct = validateCustType(sc.next());
+						if (!(ct.equals(CustType.GOLD) && ct.equals(CustType.PLATINUM) && ct.equals(CustType.SILVER)))
+							throw new CustomerHandlingException("Customer Type " + ct + " Not found!");
+						for (Customer c : customers.values())
+							if (ct.equals(c.getCustType()))
+								System.out.println(c);
+					}
+						break;
+					case 6: // Update Address(Try last!)
+						System.out.println("<---------------Enter Login Details to Update Address-------------------->");
+						System.out.println("Enter your Email and Password: ");
+						String email = sc.next();
+						Customer c = authenticateCustomer(email, sc.next(), customers);
+						System.out.println("Enter Details of Address(Type,City,State,Country,PhoneNo) to update:");
+						String addType = sc.next();
+						c.getAddresses().put(addType, new Address(addType, sc.next(), sc.next(), sc.next(), sc.next()));
+						break;
+					case 7: // Sort customers as per email(Natural Ordering-->Convert HashMap to TreeMap)
+					{
+						System.out.println("Sorted Customers (As per Email(PK))");
+						TreeMap<String, Customer> custTree = new TreeMap<String, Customer>();
+						custTree.putAll(customers);
+						for (Customer c1 : custTree.values())
+							System.out.println(c1);
+					}
+						break;
+					case 8: // Sort customers as per reg date.(Custom Ordering--->Convert HashMap to
+							// Collection(hm.values()) & then Collection to Any List implementation class)
+						System.out.println("Sorted Customers (As per Registration date)");
+						ArrayList<Customer> l1 = new ArrayList<Customer>(customers.values());
+						Collections.sort(l1, new Comparator<Customer>() {
+							@Override
+							public int compare(Customer c1, Customer c2) {
+								return c1.getRegDate().compareTo(c2.getRegDate());
+							}
+						});
+						for (Customer c2 : l1)
+							System.out.println(c2);
+						break;
+					case 9: {
+						System.out.println("----------Customer Details-----------");
+						for (Customer c3 : customers.values()) {
+							System.out.println(c3);
+							// System.out.println("Address Associated--->");
+							for (Address a : c3.getAddresses().values())
+								System.out.println("Address of " + c3.getEmail() + " ===> " + a);
+							System.out.println();
+						}
+					}
+
+						break;
+					case 10: {
+						System.out.println("Thank you for using this menu");
+						loop = true;
+					}
+
+						break;
+					default: {
+						System.out.println("Enter a valid choice !!");
+					}
+						break;
+					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+}

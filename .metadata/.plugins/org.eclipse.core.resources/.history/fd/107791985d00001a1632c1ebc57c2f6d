@@ -1,0 +1,13 @@
+package EvenOdd;
+
+public class Odd extends Thread {
+	
+	private int start, end;
+
+	public Odd(int start, int end, String name) {
+		super(name);
+		this.start = start;
+		this.end = end;
+	}
+
+}

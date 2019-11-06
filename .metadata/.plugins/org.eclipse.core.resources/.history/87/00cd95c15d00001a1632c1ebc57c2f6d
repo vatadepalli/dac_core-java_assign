@@ -1,0 +1,18 @@
+package EvenOdd;
+
+public class Test {
+	
+	public static void main(String[] args) {
+		try (Scanner sc = new Scanner(System.in)) {
+			System.out.println("Enter the Starting and Ending range for display");
+			int start = sc.nextInt();
+			int end = sc.nextInt();
+			Even e = new Even(start, end, "Even");
+			Odd o = new Odd(start, end, "Odd");
+			e.start();
+			o.start();
+			System.out.println("main over....");
+		}
+	}
+
+}

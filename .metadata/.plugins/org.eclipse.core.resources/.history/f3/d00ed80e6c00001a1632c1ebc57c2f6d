@@ -1,0 +1,10 @@
+package custm_excption;
+
+public class StudentHandlingException extends Exception {
+
+	public StudentHandlingException(String errMsg)
+	{
+		super(errMsg);
+	}
+	
+}

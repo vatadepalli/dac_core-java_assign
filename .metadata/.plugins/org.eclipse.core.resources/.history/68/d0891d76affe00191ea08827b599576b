@@ -1,0 +1,11 @@
+package com.adikaplabs.tester;
+
+import java.util.Scanner;
+
+import com.adikaplabs.core.*;
+
+public class TestOrg {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+	}
+}

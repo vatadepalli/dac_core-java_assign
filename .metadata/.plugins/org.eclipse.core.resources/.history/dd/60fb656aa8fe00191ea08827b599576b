@@ -1,0 +1,73 @@
+package com.adikaplabs.day_1;
+
+import java.util.Scanner;
+
+public class Calculator {
+	private Double firstNumber;
+	private Double secondNumber;
+
+	public Double getFirstNumber() {
+		return firstNumber;
+	}
+
+	public void setFirstNumber(Double firstNumber) {
+		this.firstNumber = firstNumber;
+	}
+
+	public Double getSecondNumber() {
+		return secondNumber;
+	}
+
+	public void setSecondNumber(Double secondNumber) {
+		this.secondNumber = secondNumber;
+	}
+
+	public Double add() {
+		return firstNumber + secondNumber;
+	}
+
+	public Double subtract() {
+		return firstNumber - secondNumber;
+	}
+
+	public Double multiply() {
+		return firstNumber * secondNumber;
+	}
+
+	public Double divide() {
+		return firstNumber / secondNumber;
+	}
+}
+
+class TestCalculator {
+	public static void main(String[] args) {
+		Calculator cal = new Calculator();
+		Scanner sc = new Scanner(System.in);
+
+		System.out.println("Enter the 1st Number");
+		cal.setFirstNumber(sc.nextDouble());
+
+		System.out.println("Enter the 2nd Number");
+		cal.setSecondNumber(sc.nextDouble());
+
+		System.out
+				.println("Which Operation to perform\n" + "1. Add\n" + "2. Subtract\n" + "3. Multiply\n" + "4. Divide");
+		int option = sc.nextInt();
+
+		switch (option) {
+		case 1:
+			System.out.println("Sum: " + cal.add());
+			break;
+		case 2:
+			System.out.println("Difference: " + cal.subtract());
+			break;
+		case 3:
+			System.out.println("Multiplication: " + cal.multiply());
+			break;
+		case 4:
+			System.out.println("Division: " + cal.divide());
+			break;
+		}
+		return;
+	}
+}

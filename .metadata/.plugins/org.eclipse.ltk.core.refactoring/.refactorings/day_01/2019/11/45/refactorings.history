@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename package &apos;com.adikaplabs.day_1&apos; to &apos;com.adikaplabs.core&apos;&#x0A;- Original project: &apos;day_1&apos;&#x0A;- Original element: &apos;day_1/src/com.adikaplabs.day_1&apos;&#x0A;- Renamed element: &apos;day_1/src/com.adikaplabs.core&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename package &apos;com.adikaplabs.day_1&apos;" flags="589830" hierarchical="false" id="org.eclipse.jdt.ui.rename.package" input="/src&lt;com.adikaplabs.day_1" name="com.adikaplabs.core" qualified="false" references="true" stamp="1572833542924" textual="false" version="1.0"/>
+</session>

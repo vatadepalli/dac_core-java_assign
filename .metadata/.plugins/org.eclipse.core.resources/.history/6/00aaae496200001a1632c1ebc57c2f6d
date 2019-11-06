@@ -1,0 +1,176 @@
+package com.app.test;
+
+
+import static com.app.utils.BankValidationRules.checkForDupAccNo;
+import static com.app.utils.BankValidationRules.parseNValidateDate;
+import static com.app.utils.BankValidationRules.validateBalance;
+import static com.app.utils.BankValidationRules.validateType;
+import static com.app.utils.CollectionUtils.getAccountByNo;
+import static com.app.utils.SIOUtils.*;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.Scanner;
+import java.util.TreeMap;
+
+import com.app.core.AccType;
+import com.app.core.BankAccount;
+
+import com.app.cust_excs.BankHandlingException;
+
+public class TestAcc {
+
+	public static void main(String[] args) {
+		try (Scanner sc = new Scanner(System.in)) {
+			System.out.println("Enter file name to restore data");
+			// get accts from bin file 
+			String fileName=sc.nextLine();
+			HashMap<String, BankAccount> accts = restoreAcctInfo(fileName);
+			System.out.println("restored accts "+accts);
+			boolean exit = false;
+			while (!exit) {
+				try {
+					System.out.println("1: create a/c 2: Get A/C summary 3: Funds Transfer 4 : Close A/C \n"
+							+ "5 : Display all a/cs info 100 : Exit");
+					switch (sc.nextInt()) {
+					case 1:
+						System.out.println("Enter a/c info no nm bal dt type");
+						BankAccount a = new BankAccount(
+								checkForDupAccNo(sc.next(), 
+								accts), sc.next(),
+								validateBalance(sc.nextDouble()), 
+								parseNValidateDate(sc.next()),
+								validateType(sc.next()));
+						accts.put(a.getAcctNo(), a);
+						break;
+
+					case 2: // a/c summary
+						System.out.println("Enter a/c no");
+						System.out.println(getAccountByNo(sc.next(), accts));
+						break;
+					case 3: // funds transfer
+						System.out.println("enter src , dest acc no & xfer amt");
+						BankAccount src = getAccountByNo(sc.next(), accts);
+						BankAccount dest = getAccountByNo(sc.next(), accts);
+						src.transferFunds(dest, sc.nextDouble());
+						System.out.println("funds transferred....");
+
+						break;
+					case 4: // close a/c
+						// removing by key
+						System.out.println("Enter a/c no for closing");
+						a = accts.remove(sc.next());
+						if (a == null)
+							throw new BankHandlingException("A/c closing failed : invalid ac no");
+						System.out.println("A/C removed : " + a);
+						break;
+					case 5: // display all accts info
+						// convert map ---> collection<V> --values()
+						for (BankAccount a1 : accts.values())
+							System.out.println(a1);
+						break;
+					case 6: // apply interest on all saving a/cs
+						// created before specific date
+						Date d = parseNValidateDate(sc.next());
+						for (BankAccount a1 : accts.values())
+							if (a1.getAcType() == AccType.SAVING && a1.getCreationDate().before(d))
+								a1.applyInterest();
+						break;
+					case 7: // convert map to collection view
+						// display all keys from a map : keySet
+						System.out.println("Keys : ");
+						for (String s : accts.keySet())
+							System.out.print(s + " ");
+						System.out.println("\n Values ");
+						for (BankAccount a1 : accts.values())
+							System.out.println(a1);
+						System.out.println("\n Entries ");
+						for (Entry<String, BankAccount> e : accts.entrySet())
+							System.out.println("Key " + e.getKey() + " Val : " + e.getValue());
+						break;
+					case 11://extract collection of vals.
+						Collection<BankAccount> coll=accts.values();
+						for(BankAccount a1 : coll)
+							System.out.println(a1);
+						//remove BA with no "bob-001"
+						System.out.println("Removed "+accts.remove("bob-001"));
+						for(BankAccount a1 : coll)
+							System.out.println(a1);
+					
+						break;
+					case 8: // sort bank accounts as per asc acct id
+						// sorting based upon key --TM--N.O TreeMap(Map map)
+						// invokes String's compareTo
+						TreeMap<String, BankAccount> tm = 
+						new TreeMap<String, BankAccount>(accts);
+						for (BankAccount a1 : tm.values())
+							System.out.println(a1);
+
+						break;
+					case 9: // sort bank accounts as per desc acct id
+						// sorting as per key -- TreeMap -- 
+						//custom ordering --Comparator
+						TreeMap<String, BankAccount> tm2 =
+						new TreeMap<String, BankAccount>
+						(new Comparator<String>() {
+
+							@Override
+							public int compare(String o1, String o2) {
+								System.out.println("in compare : desc");
+								return o2.compareTo(o1);
+							}
+
+						});
+						// populate map with entries
+						tm2.putAll(accts);
+						for (BankAccount a1 : tm2.values())
+							System.out.println(a1);
+						break;
+					case 10: // sort bank accounts as per reg date n balance.
+						// value based sorting -- CAN'T use Sorted maps
+						// convert it to collection view -- values
+						// HM-->Collection (values)
+						Collection<BankAccount> collAccts = accts.values();
+						// Collection-- AL (constr)
+						ArrayList<BankAccount> list = new ArrayList<BankAccount>(collAccts);
+						Collections.sort(list, new Comparator<BankAccount>() {
+
+							@Override
+							public int compare(BankAccount o1, BankAccount o2) {
+								int ret = o1.getCreationDate().compareTo(o2.getCreationDate());
+								if (ret != 0)
+									return ret;
+								return ((Double) o1.getBalance()).compareTo(o2.getBalance());
+							}
+
+						});
+						//display sorted accts
+						System.out.println("Accounts sorted as per date n bal");
+						for(BankAccount a1 : list)
+							System.out.println(a1);
+						
+						break;
+					case 100:
+						//store acct info to bin file : ser
+						storeAcctInfo(accts,fileName);
+						exit = true;
+						break;
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				sc.nextLine();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+}

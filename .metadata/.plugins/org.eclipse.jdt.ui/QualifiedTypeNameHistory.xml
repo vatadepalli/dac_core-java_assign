@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="com.adikaplabs.core.Calculator"/>
+    <fullyQualifiedTypeName name="com.adikaplabs.core.Customer"/>
+    <fullyQualifiedTypeName name="com.adikaplabs.core.Tank"/>
+    <fullyQualifiedTypeName name="com.adikaplabs.core.Student"/>
+    <fullyQualifiedTypeName name="com.app.core.Student"/>
+    <fullyQualifiedTypeName name="com.app.utils.ValidationRules"/>
+    <fullyQualifiedTypeName name="java.sql.Date"/>
+    <fullyQualifiedTypeName name="java.util.Date"/>
+    <fullyQualifiedTypeName name="com.app.cust_excs.CustomerHandlingException"/>
+    <fullyQualifiedTypeName name="com.app.core.Customer"/>
+    <fullyQualifiedTypeName name="java.io.ObjectOutputStream"/>
+    <fullyQualifiedTypeName name="java.io.FileOutputStream"/>
+    <fullyQualifiedTypeName name="com.app.utils.IOUtils"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.io.Serializable"/>
+    <fullyQualifiedTypeName name="java.io.FileInputStream"/>
+    <fullyQualifiedTypeName name="java.io.ObjectInputStream"/>
+    <fullyQualifiedTypeName name="java.util.Scanner"/>
+    <fullyQualifiedTypeName name="java.util.HashMap"/>
+</qualifiedTypeNameHistroy>

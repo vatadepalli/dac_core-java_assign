@@ -1,0 +1,13 @@
+package com.app.utils;
+
+import java.io.DataOutputStream;
+import java.io.FileOutputStream;
+import java.util.Scanner;
+
+public class IOUtils {
+	
+	public static void writeData(String filename, HashMap<String, Customer>) {
+		
+	}
+
+}

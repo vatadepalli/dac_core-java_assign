@@ -1,0 +1,12 @@
+package com.adikaplabs.core;
+
+public class Employee {
+	public static int idCounter;
+	static {
+		idCounter = 100;
+	}
+	private String name, email, deptId;
+	double basic;
+	private int id;
+
+}

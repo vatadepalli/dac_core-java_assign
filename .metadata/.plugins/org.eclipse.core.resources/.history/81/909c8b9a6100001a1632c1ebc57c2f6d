@@ -1,0 +1,100 @@
+package com.app.core;
+
+import static utils.BankValidationRules.*;
+import static java.time.LocalDate.*;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import cust_exc.BankHandlingException;
+
+public class BankAccount implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
+
+	private String acctNo, name;
+	private double balance;
+	// a/c creation date
+	private Date creationDate;
+	// acct type : enum
+	private AccType acType;
+	// BankAccount HAS-A Transactions
+	private List<Transaction> transactions;
+	public static final double INTEREST_RATE;
+	static {
+		INTEREST_RATE = 0.07;
+	}
+
+	public BankAccount(String acctNo, String name, double balance, Date creationDate, AccType acType) {
+		super();
+		this.acctNo = acctNo;
+		this.name = name;
+		this.acType = acType;
+		this.balance = balance;
+		this.creationDate = creationDate;
+		// create empty collection of txs
+		transactions = new ArrayList<>();
+	}
+
+	@Override
+	public String toString() {
+		return "BankAccount [acctNo=" + acctNo + ", name=" + name + ", type=" + acType + ", balance=" + balance
+				+ " created on " + sdf.format(creationDate) + " \n Transactions : " + transactions;
+	}
+
+	/*
+	 * B.L --withdraw,deposit,fundsTransfer, apply simple Interest.
+	 * 
+	 * 
+	 */
+	public void deposit(double amt) {
+		balance += amt;
+		// create tx rec & add it in a collection
+		transactions.add(new Transaction(TxType.DEPOSIT, amt, now()));
+	}
+
+	public void withdraw(double amt) throws BankHandlingException {
+		validateBalance(balance - amt);
+		balance -= amt;
+		// create tx rec & add it in a collection
+		transactions.add(new Transaction(TxType.WITHDRAW, amt, now()));
+
+	}
+
+	public void transferFunds(BankAccount dest, double amt) throws BankHandlingException {
+		this.withdraw(amt);
+		dest.deposit(amt);
+	}
+
+	public void applyInterest() {
+		balance += (balance * INTEREST_RATE);
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public double getBalance() {
+		return balance;
+	}
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public AccType getAcType() {
+		return acType;
+	}
+
+	public String getAcctNo() {
+		return acctNo;
+	}
+
+	public static double getInterestRate() {
+		return INTEREST_RATE;
+	}
+
+}

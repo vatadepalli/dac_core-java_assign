@@ -1,0 +1,44 @@
+package com.app.utils;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import com.app.core.Course;
+
+import com.app.cust_excs.StudentHandlingException;
+
+public class ValidationRules {
+	public static vStringoid validateName(String name) throws StudentHandlingException {
+		if (name.length() < 4 || name.length() > 10)
+			throw new StudentHandlingException("Name is not valid");
+		return name;
+	}
+
+	public static String validateEmail(String email) throws StudentHandlingException {
+		if ((email.length() < 4 || email.length() > 10) || !email.contains("@"))
+			throw new StudentHandlingException("Email is not valid");
+	}
+
+
+	
+	public static Course validateCourse(String course) throws IllegalArgumentException {
+		
+		return Course.valueOf(course.toUpperCase());
+	}
+	
+	public static Date validateDate(String date) throws StudentHandlingException, ParseException {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+		
+		Date din = sdf.parse(date);
+		Date threshold = sdf.parse("01.01.1985");
+		if(threshold.compareTo(din) > 0) {
+			throw new StudentHandlingException("DOB need to greater than 01.01.1985");
+		}
+		
+		return din;
+		
+	}
+
+}

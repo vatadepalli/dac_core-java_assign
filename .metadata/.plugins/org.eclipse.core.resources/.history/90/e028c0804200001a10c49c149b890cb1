@@ -1,0 +1,9 @@
+package com.app.core;
+
+public class Customer {
+	
+	String email, password;
+	Double regAmount;
+	Date regDate;
+
+}

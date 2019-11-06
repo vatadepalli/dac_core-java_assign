@@ -1,0 +1,8 @@
+package com.adikaplabs.shapes;
+
+public interface Computable {
+	double PI = 3.14;
+	
+	double calcArea();
+	double calcPerimeter();
+}

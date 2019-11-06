@@ -1,0 +1,130 @@
+package com.app.tester;
+
+import static com.app.utils.CollectionUtils.*;
+import static com.app.utils.ValidationRules.*;
+
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Scanner;
+
+import com.app.core.Student;
+import com.app.core.Course;
+
+import com.app.cust_excs.StudentHandlingException;
+import com.app.cust_comparator.*;
+
+public class TestStudent {
+
+	public static void main(String[] args) {
+		
+		try(Scanner sc = new Scanner(System.in))
+		{
+			ArrayList<Student> students = populateStudent();
+			boolean exit = false;
+			while(!exit)
+			{
+				try {
+					System.out.println("************* Menu *************");
+					System.out.println("1.Add New Student\n"
+							+ "2.Display Student Details of a course\n"
+							+ "3.Update Student Marks\n"
+							+ "4.Display All Students born after specific Date and in a specific Course\n"
+							+ "5.Cancel Admission\n"
+							+ "6.Sort Students as per PRN\n"
+							+ "7.Sort Students as per DOB and Marks\n"
+							+ "8.Display Name of Topper from a specific Course\n"
+							+ "9.Display All Students\n"
+							+ "10.Exit");
+					System.out.println("Enter choice:");
+					switch (sc.nextInt()) {
+					case 1:
+						System.out.println("Enter Student Details (PRN, Name, Email, Marks, Course("+Arrays.toString(Course.values())+"), DOB)");
+						students.add(new Student(checkPRN(new Student(sc.next()),students),
+								validateName(sc.next()),validateEmail(sc.next()),
+								validateMarks(sc.nextInt()),validateCourse(sc.next()),
+								validateDate(sc.next())));
+						System.out.println("Student Enrolled Successfully!");
+						break;
+					case 2:
+						System.out.println("Enter course name : ");
+						Course stc = validateCourse(sc.next());			//Converting String to Enum type
+						System.out.println("Student Details for course [ "+stc+" ] : ");
+						for(Student s: students)
+						{
+							if(s.getCourse() == stc)
+								System.out.println("Name: "+s.getName());
+						}
+						break;
+					case 3:
+						System.out.println("Enter PRN and new Marks of a student: ");
+						int index = students.indexOf(new Student(sc.next()));
+						if(index==-1)
+							throw new StudentHandlingException("No Student Found!");
+						int prevMarks = students.get(index).getMarks();
+						students.get(index).setMarks(sc.nextInt());
+						System.out.println("Marks of Student "+students.get(index).getName()+" (whose marks were= "+prevMarks+") has been Updated to "+students.get(index).getMarks());
+						break;
+					case 4:
+						System.out.println("Enter DOB and Course Name : ");
+						Date dob = validateDate(sc.next());
+						Course stuc = validateCourse(sc.next());
+						for(Student s:students)
+						{
+							if(s.getDob().after(dob) && s.getCourse().equals(stuc))
+							{
+								System.out.println("Student PRN: "+s.getPrn()+"\tStudent Name: "+s.getName());
+							}
+						}
+						break;
+					case 5:
+						System.out.println("Enter PRN to Rusticate a Student: ");
+						if(!students.remove(new Student(sc.next())))
+							throw new StudentHandlingException("No Student Found");
+						System.out.println("Student Rusticated successfully!");
+						break;
+					case 6:
+						Collections.sort(students);
+						System.out.println("Natural Ordering of Students(PRN based)----->");
+						System.out.println(students);
+						break;
+					case 7:
+						Collections.sort(students, new StudentDateMarksComparator());
+						System.out.println("Custom Ordering of Students(DOB and Marks based)----->");
+						for(Student s: students)
+							System.out.println(s);
+						break;
+					case 8:
+						System.out.println("Enter Course Name: ");
+						Course stcs = validateCourse(sc.next());
+						ArrayList<Student> l1 = new ArrayList<Student>();
+						for(Student s:students)
+							if(stcs == s.getCourse())
+								l1.add(s);
+						System.out.println(Collections.max(l1,new StudentMarksComparator()));
+						break;
+					case 9:
+						for(Student s: students)
+							System.out.println(s);
+						break;
+					case 10:
+						System.out.println("Thanks For Using Our Admission Portal!");
+						exit=true;
+						break;
+					default:
+						System.out.println("Please Enter a valid!");
+						break;
+					}
+						
+				}catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+				sc.nextLine();
+			}
+		}
+	}
+
+}

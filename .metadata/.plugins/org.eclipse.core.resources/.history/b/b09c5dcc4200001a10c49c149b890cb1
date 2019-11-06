@@ -1,0 +1,12 @@
+package com.app.core;
+
+public class Address {
+
+	String city, state, country, phone, type;
+	
+	public String getType() {
+		return type;
+	}
+	
+	
+}

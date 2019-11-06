@@ -1,0 +1,8 @@
+package com.adikaplabs.core;
+
+public class Manager extends Employee{
+	
+	private double perfBonus;
+	
+	
+}

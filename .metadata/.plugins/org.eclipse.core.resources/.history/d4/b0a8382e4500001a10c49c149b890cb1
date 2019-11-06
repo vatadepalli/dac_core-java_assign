@@ -1,0 +1,22 @@
+package com.app.core;
+
+import java.util.Date;
+import java.util.HashMap;
+
+import com.app.cust_excs.CustomerHandlingException;
+
+public class Customer {
+	
+	String email, password;
+	Double regAmount;
+	Date regDate;
+	
+	private CustType custType;
+	private HashMap<String, Address> addressMap;
+	
+	public void linkAddress(String type, String city, String state, String country, String phoneNo) throws CustomerHandlingException {
+		if(addressMap.putIfAbsent(type, new Address(type,city,state,country,phoneNo)) != null)
+			throw new CustomerHandlingException("Customer already has a "+type+" address");
+	}
+
+}

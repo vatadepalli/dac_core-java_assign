@@ -1,0 +1,10 @@
+package com.adikaplabs.shapes;
+
+public class Rectangle extends Point implements Computable {
+	private double width, height;
+	public Rectangle(double x, double y, double width, double height) {
+		super(x, y);
+		this.height = height;
+		this.width = width;
+	}
+}
